@@ -166,7 +166,7 @@ $GLOBALS['TL_DCA']['tl_dlh_googlemaps'] = [
             'options'   => ['proportional','box'],
             'reference' => &$GLOBALS['TL_LANG']['MSC'],
             'eval'      => ['includeBlankOption' => true, 'rgxp' => 'digit', 'nospace' => true, 'helpwizard' => false, 'tl_class' => 'w50 clr'],
-            'default'      => serialize(array(16,9,'proportional')),
+            //'default'      => serialize(array(16,9,'proportional')),
             'sql'       => "varchar(128) NOT NULL default ''",
         ],
         'zoom'                     => [
