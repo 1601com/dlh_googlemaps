@@ -1,5 +1,5 @@
 {
-    "name": "delahaye/dlh_googlemaps",
+    "name": "agentur1601com/dlh_googlemaps",
     "description":"Google maps module for Contao",
     "keywords":["contao", "googlemaps", "geo", "map"],
     "type": "contao-module",
@@ -20,7 +20,7 @@
         "php": ">=5.3",
 	    "contao/core-bundle": "^3.5.1 || ~4.2",
 	    "contao-community-alliance/composer-plugin": "~2.4 || ~3.0",
-	    "delahaye/dlh_geocode": ">=1.1.2"
+	    "agentur1601com/dlh_geocode": ">=1.1.2"
     },
     "autoload": {
         "classmap": [""]
