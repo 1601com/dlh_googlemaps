@@ -12,6 +12,10 @@ endif;
 <<?= $this->hl; ?>><?= $this->headline; ?></<?= $this->hl; ?>>
 <?php endif; ?>
 
+<?php
+    //$this->showTemplateVars();
+?>
+
 <div class="dlh_googlemap block" id="dlh_googlemap_<?= $this->map['id']; ?>" style="<?= $this->map['mapSize']['position'].$this->map['mapSize']['width'].$this->map['mapSize']['height'].$this->map['mapSize']['padding']; ?>"><?php if($_COOKIE['dlh_googlemaps'] || $this->map['protected']!='1'): ?><noscript><p><?= ($this->map['staticMapNoscript'] ? $this->map['staticMap'] : $this->labels['noscript']); ?></p></noscript><?php else: ?><div id="confirm-googlemaps" onClick="gmap<?= $this->map['id']; ?>_allow()"><?php echo ($this->map['protected']=='1' && $this->map['privacy']=='') ? $this->labels['privacy'] : $this->map['privacy']; ?></div><?php endif; ?></div>
 
 <script>
@@ -158,6 +162,9 @@ function gmap<?= $this->map['id']; ?>_initialize() {
 
 
 
+<?php
+if($_COOKIE['dlh_googlemaps'] || $this->map['protected']!='1'):
+?>
 if(window.addEvent) {
     window.addEvent('domready', function() {
         gmap<?= $this->map['id']; ?>_initialize();
@@ -167,8 +174,11 @@ if(window.addEvent) {
         gmap<?= $this->map['id']; ?>_initialize();
     });
 } else {
-    window.setTimeout("gmap<?= $this->map['id']; ?>_initialize()", 500);
+    window.setTimeout('gmap<?= $this->map['id']; ?>_initialize()', 500);
 }
+<?php
+endif;
+?>
 
 </script>
 
