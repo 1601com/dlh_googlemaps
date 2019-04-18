@@ -26,7 +26,6 @@ array_insert($GLOBALS['BE_MOD']['content'], sizeof($GLOBALS['BE_MOD']['content']
 )
 ));
 
-
 /**
  * Add modules
  */

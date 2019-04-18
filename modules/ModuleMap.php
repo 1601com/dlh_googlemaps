@@ -125,6 +125,5 @@ class ModuleMap extends \Module
         $this->Template->tabs = $this->dlh_googlemap_tabs;
 
         $this->Template->labels = $GLOBALS['TL_LANG']['dlh_googlemaps']['labels'];
-
     }
 }
