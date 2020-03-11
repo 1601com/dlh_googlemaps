@@ -502,7 +502,7 @@ $GLOBALS['TL_DCA']['tl_dlh_googlemaps'] = [
  * @author     Christian de la Haye <http://delahaye.de>
  * @package    dlh_googlemaps
  */
-class tl_dlh_googlemaps extends \Backend
+class tl_dlh_googlemaps extends \Contao\Backend
 {
 
     /**
@@ -669,7 +669,7 @@ class tl_dlh_googlemaps extends \Backend
         $return = '<strong>' . $arrRow['title'] . '</strong>';
         if ($arrRow['center'] && $arrRow['zoom'] && $arrRow['mapTypeId'])
         {
-            $apikey = '&key=' . \Config::get('dlh_googlemaps_apikey');
+            $apikey = '&key=' . \Contao\Config::get('dlh_googlemaps_apikey');
 
             $src    = 'https://maps.google.com/maps/api/staticmap?center=' . $arrRow['center'] . $apikey . '&zoom=' . ($arrRow['zoom'] - 2) . '&maptype=' . strtolower(
                     $arrRow['mapTypeId']

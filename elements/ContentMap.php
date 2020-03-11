@@ -20,6 +20,10 @@
 namespace delahaye\googlemaps;
 
 
+use Contao\ContentElement;
+use Contao\FrontendTemplate;
+use Contao\PageModel;
+
 /**
  * Class ContentMap
  *
@@ -29,7 +33,7 @@ namespace delahaye\googlemaps;
  * @author     Christian de la Haye
  * @package    dlh_googlemaps
  */
-class ContentMap extends \ContentElement
+class ContentMap extends ContentElement
 {
 
     /**
@@ -66,7 +70,7 @@ class ContentMap extends \ContentElement
 
         $key = null;
         
-        if (($objRootPage = \PageModel::findByPk($objPage->rootId)) !== null)
+        if (($objRootPage = PageModel::findByPk($objPage->rootId)) !== null)
         {
             $key = $objRootPage->dlh_googlemaps_apikey;
         }
@@ -95,7 +99,7 @@ class ContentMap extends \ContentElement
         // static map
         if ($this->dlh_googlemap_static)
         {
-            $this->Template = new \FrontendTemplate('ce_dlh_googlemapsstatic');
+            $this->Template = new FrontendTemplate('ce_dlh_googlemapsstatic');
 
             if ($this->dlh_googlemap_url)
             {
@@ -110,7 +114,7 @@ class ContentMap extends \ContentElement
         {
             if ($this->dlh_googlemap_template && $this->dlh_googlemap_template != 'ce_dlh_googlemaps_default')
             {
-                $this->Template = new \FrontendTemplate($this->dlh_googlemap_template);
+                $this->Template = new FrontendTemplate($this->dlh_googlemap_template);
             }
 
             if ($arrMap['useClusterer'])

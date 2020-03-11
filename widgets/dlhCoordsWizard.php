@@ -28,7 +28,7 @@ namespace Contao;
  * @author     Christian de la Haye
  * @package    dlh_googlemaps
  */
-class dlhCoordsWizard extends \Widget
+class dlhCoordsWizard extends Widget
 {
 
 	/**
@@ -93,33 +93,33 @@ class dlhCoordsWizard extends \Widget
 		$strCommand = 'cmd_' . $this->strField;
 
 		// Change the order
-		if (\Input::get($strCommand) && is_numeric(\Input::get('cid')) && \Input::get('id') == $this->currentRecord)
+		if (Input::get($strCommand) && is_numeric(Input::get('cid')) && Input::get('id') == $this->currentRecord)
 		{
 			$this->import('Database');
 
-			switch (\Input::get($strCommand))
+			switch (Input::get($strCommand))
 			{
 				case 'copy':
-					$this->varValue = array_duplicate($this->varValue, \Input::get('cid'));
+					$this->varValue = array_duplicate($this->varValue, Input::get('cid'));
 					break;
 
 				case 'up':
-					$this->varValue = array_move_up($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_up($this->varValue, Input::get('cid'));
 					break;
 
 				case 'down':
-					$this->varValue = array_move_down($this->varValue, \Input::get('cid'));
+					$this->varValue = array_move_down($this->varValue, Input::get('cid'));
 					break;
 
 				case 'delete':
-					$this->varValue = array_delete($this->varValue, \Input::get('cid'));
+					$this->varValue = array_delete($this->varValue, Input::get('cid'));
 					break;
 			}
 
 			$this->Database->prepare("UPDATE " . $this->strTable . " SET " . $this->strField . "=? WHERE id=?")
 						   ->execute(serialize($this->varValue), $this->currentRecord);
 
-			$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', \Environment::get('request'))));
+			$this->redirect(preg_replace('/&(amp;)?cid=[^&]*/i', '', preg_replace('/&(amp;)?' . preg_quote($strCommand, '/') . '=[^&]*/i', '', Environment::get('request'))));
 		}
 
 		// Make sure there is at least an empty array
@@ -129,12 +129,12 @@ class dlhCoordsWizard extends \Widget
 		}
 
 		// Initialize the tab index
-		if (!\Cache::has('tabindex'))
+		if (!Cache::has('tabindex'))
 		{
-			\Cache::set('tabindex', 1);
+			Cache::set('tabindex', 1);
 		}
 
-		$tabindex = \Cache::get('tabindex');
+		$tabindex = Cache::get('tabindex');
 		$return = '<ul id="ctrl_'.$this->strId.'" class="tl_listwizard" data-tabindex="'.$tabindex.'">';
 
 		// Add input fields
@@ -150,11 +150,11 @@ class dlhCoordsWizard extends \Widget
 
 				if ($button == 'drag')
 				{
-					$return .= \Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['move']) . '"');
+					$return .= Image::getHtml('drag.gif', '', 'class="drag-handle" title="' . sprintf($GLOBALS['TL_LANG']['MSC']['move']) . '"');
 				}
 				else
 				{
-					$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'"' . $class . ' title="'.specialchars($GLOBALS['TL_LANG']['MSC']['lw_'.$button]).'" onclick="Backend.listWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.\Image::getHtml($button.'.gif', $GLOBALS['TL_LANG']['MSC']['lw_'.$button], 'class="tl_listwizard_img"').'</a> ';
+					$return .= '<a href="'.$this->addToUrl('&amp;'.$strCommand.'='.$button.'&amp;cid='.$i.'&amp;id='.$this->currentRecord).'"' . $class . ' title="'.specialchars($GLOBALS['TL_LANG']['MSC']['lw_'.$button]).'" onclick="Backend.listWizard(this,\''.$button.'\',\'ctrl_'.$this->strId.'\');return false">'.Image::getHtml($button.'.gif', $GLOBALS['TL_LANG']['MSC']['lw_'.$button], 'class="tl_listwizard_img"').'</a> ';
 				}
 			}
 
@@ -162,7 +162,7 @@ class dlhCoordsWizard extends \Widget
 		}
 
 		// Store the tab index
-		\Cache::set('tabindex', $tabindex);
+		Cache::set('tabindex', $tabindex);
 
 		return $return.'
   </ul>';
@@ -171,12 +171,12 @@ class dlhCoordsWizard extends \Widget
 
 	/**
 	 * Return a form to choose a CSV file and import it
-	 * @param \DataContainer
+	 * @param DataContainer
 	 * @return string
 	 */
-	public function importList(\DataContainer $dc)
+	public function importList(DataContainer $dc)
 	{
-		if (\Input::get('key') != 'list')
+		if (Input::get('key') != 'list')
 		{
 			return '';
 		}
@@ -187,19 +187,19 @@ class dlhCoordsWizard extends \Widget
 		// See #4086
 		if (!class_exists($class))
 		{
-			$class = 'FileUpload';
+			$class = FileUpload::class;
 		}
 
 		$objUploader = new $class();
 
 		// Import CSS
-		if (\Input::post('FORM_SUBMIT') == 'tl_list_import')
+		if (Input::post('FORM_SUBMIT') == 'tl_list_import')
 		{
 			$arrUploaded = $objUploader->uploadTo('system/tmp');
 
 			if (empty($arrUploaded))
 			{
-				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
 				$this->reload();
 			}
 
@@ -212,12 +212,12 @@ class dlhCoordsWizard extends \Widget
 
 				if ($objFile->extension != 'csv')
 				{
-					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
+					Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
 					continue;
 				}
 
 				// Get separator
-				switch (\Input::post('separator'))
+				switch (Input::post('separator'))
 				{
 					case 'semicolon':
 						$strSeparator = ';';
@@ -244,25 +244,25 @@ class dlhCoordsWizard extends \Widget
 				}
 			}
 
-			$objVersions = new \Versions($dc->table, \Input::get('id'));
+			$objVersions = new Versions($dc->table, Input::get('id'));
 			$objVersions->create();
 
 			$this->Database->prepare("UPDATE " . $dc->table . " SET multiCoords=? WHERE id=?")
-						   ->execute(serialize($arrList), \Input::get('id'));
+						   ->execute(serialize($arrList), Input::get('id'));
 
-			\System::setCookie('BE_PAGE_OFFSET', 0, 0);
+			System::setCookie('BE_PAGE_OFFSET', 0, 0);
 			$this->redirect(str_replace('&key=list', '', \Environment::get('request')));
 		}
 
 		// Return form
 		return '
 <div id="tl_buttons">
-<a href="'.ampersand(str_replace('&key=list', '', \Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
+<a href="'.ampersand(str_replace('&key=list', '', Environment::get('request'))).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
 
 <h2 class="sub_headline">'.$GLOBALS['TL_LANG']['MSC']['lw_import'][1].'</h2>
-'.\Message::generate().'
-<form action="'.ampersand(\Environment::get('request'), true).'" id="tl_list_import" class="tl_form" method="post" enctype="multipart/form-data">
+'.Message::generate().'
+<form action="'.ampersand(Environment::get('request'), true).'" id="tl_list_import" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_list_import">
 <input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">

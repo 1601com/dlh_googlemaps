@@ -2,7 +2,9 @@
 
 namespace delahaye\googlemaps;
 
-class MapSizeWidget extends \ImageSize
+use Contao\ImageSize;
+
+class MapSizeWidget extends ImageSize
 {
     /**
      * Trim values

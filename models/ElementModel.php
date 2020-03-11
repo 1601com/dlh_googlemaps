@@ -19,10 +19,12 @@
 namespace delahaye\googlemaps;
 
 
+use Contao\Model;
+
 /**
  * Reads and writes tl_dlh_googlemaps
  */
-class ElementModel extends \Model
+class ElementModel extends Model
 {
 
 	/**

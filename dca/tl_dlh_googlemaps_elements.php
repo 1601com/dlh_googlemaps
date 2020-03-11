@@ -545,7 +545,7 @@ class tl_dlh_googlemaps_elements extends Backend
     public function coordsImportWizard()
     {
         return ' <a href="' . $this->addToUrl('key=list') . '" title="' . specialchars($GLOBALS['TL_LANG']['MSC']['lw_import'][1]) . '" onclick="Backend.getScrollOffset()">'
-               . Image::getHtml('tablewizard.gif', $GLOBALS['TL_LANG']['MSC']['tw_import'][0], 'style="vertical-align:text-bottom"') . '</a>';
+               . \Contao\Image::getHtml('tablewizard.gif', $GLOBALS['TL_LANG']['MSC']['tw_import'][0], 'style="vertical-align:text-bottom"') . '</a>';
     }
 
 
@@ -642,7 +642,7 @@ class tl_dlh_googlemaps_elements extends Backend
             $this->redirect('contao/main.php?act=error');
         }
 
-        $objVersions = new Versions('tl_dlh_googlemaps_elements', $intId);
+        $objVersions = new \Contao\Versions('tl_dlh_googlemaps_elements', $intId);
         $objVersions->initialize();
 
         // Trigger the save_callback
@@ -684,7 +684,7 @@ class tl_dlh_googlemaps_elements extends Backend
 
         $objElement = \delahaye\googlemaps\ElementModel::findByPk($dc->id);
 
-        if ($objElement && \Input::get('act') == 'edit')
+        if ($objElement && \Contao\Input::get('act') == 'edit')
         {
 
             if ($objElement->type == 'MARKER')
