@@ -19,15 +19,22 @@
 namespace delahaye\googlemaps;
 
 
+use Contao\BackendTemplate;
+use Contao\Config;
+use Contao\FrontendTemplate;
+use Contao\Module;
+use Contao\PageModel;
+
 /**
  * Class ModuleMap
  *
  * Front end module for a Google map.
+ *
  * @copyright  2014 de la Haye
  * @author     Christian de la Haye
  * @package    dlh_googlemaps
  */
-class ModuleMap extends \Module
+class ModuleMap extends Module
 {
     /**
      * Template
@@ -46,7 +53,7 @@ class ModuleMap extends \Module
         {
             $objMap = \delahaye\googlemaps\MapModel::findByPk($this->dlh_googlemap);
 
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['dlh_googlemaps'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
@@ -70,14 +77,14 @@ class ModuleMap extends \Module
 
         $key = null;
         
-        if (($objRootPage = \PageModel::findByPk($objPage->rootId)) !== null)
+        if (($objRootPage = PageModel::findByPk($objPage->rootId)) !== null)
         {
             $key = $objRootPage->dlh_googlemaps_apikey;
         }
         
         if (!$key)
         {
-            $key = \Config::get('dlh_googlemaps_apikey');
+            $key = Config::get('dlh_googlemaps_apikey');
         }
 
         // Contao framework sets images to max-width 100%, which collides with Google's CSS
@@ -100,7 +107,7 @@ class ModuleMap extends \Module
         // static map
         if($this->dlh_googlemap_static)
         {
-            $this->Template = new \FrontendTemplate('mod_dlh_googlemapsstatic');
+            $this->Template = new FrontendTemplate('mod_dlh_googlemapsstatic');
 
             if($this->dlh_googlemap_url)
             {
@@ -112,7 +119,7 @@ class ModuleMap extends \Module
         {
             if($this->dlh_googlemap_template && $this->dlh_googlemap_template != 'mod_dlh_googlemaps_default')
             {
-                $this->Template = new \FrontendTemplate($this->dlh_googlemap_template);
+                $this->Template = new FrontendTemplate($this->dlh_googlemap_template);
             }
 
             if($arrMap['useClusterer']){
